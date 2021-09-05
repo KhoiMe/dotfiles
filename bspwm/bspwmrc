@@ -1,0 +1,97 @@
+#! /bin/sh  
+#dont touch the text on the top "bin"
+
+sxhkd &
+#--------monitor things---------------
+bspc monitor -d I II III IV V VI VII 
+# bspc monitor -d 1 2 3 4 5
+# bspc monitor vga-1 -d 6 7 8 9 10
+#bspc monitor dp-2 -d 1 2 3
+#bspc monitor hdmi-1 -d 4 5 6
+#bspc monitor edp-1 -d 7 8 9 10
+#-------------------------------------
+
+# killing all the notifications
+
+#------------rules----------------------
+bspc rule -a urxvt:scratchy sticky=on state=floating rectangle=widthxheight+xoffset+yoffset
+bspc rule -a Vivaldi-stable desktop='^1' focus=on
+#bspc rule --add Screenkey manage=off
+#---------------------------------------
+
+#---------------config------------------
+
+bspc config border_width         0
+bspc config window_gap           6
+bspc config split_ratio          0.52
+bspc config top_padding          -3
+bspc config borderless_monocle   true
+bspc config gapless_monocle      false
+#bspc config normal_border_color  "#282828"
+#bspc config active_border_color  "#282828"
+#bspc config focused_border_color "#282828"
+#bspc config presel_feedback_color "#282828"
+bspc config click_to_focus true
+bspc config focus_by_distance             true
+bspc config focus_follows_pointer         true
+bspc config history_aware_focus           true
+bspc config remove_disabled_monitors      true
+bspc config merge_overlapping_monitors    true
+bspc config pointer_modifier mod4
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resize_corner
+
+# --------------------------------
+
+#---wallpaper and other things----
+
+# Set wallpaper
+# feh --bg-scale ~/Pictures/horizon.jpg
+feh --bg-scale ~/Pictures/GhostHeartBlack.png
+
+# Reload .Xresources
+xrdb -load ~/.Xresources
+# cursor 
+xsetroot -cursor_name left_ptr
+
+# kill all the notifications
+killall mate-notification-daemon
+
+# ------- Autostart apps ---------
+
+# polybar 
+$HOME/.config/polybar/launch.sh 
+# picom
+picom --config /home/jose/.config/picom/picom.conf
+# Dunst
+dunst &
+# screenshot tool app (flameshot)
+flameshot
+# network-manager-applet
+nm-applet &
+
+# ------- Mouse/Touchpad fixes ------
+
+# Start libinput gestures
+libinput-gestures-setup start
+    
+# Xinput configs (touchpad)
+xinput set-prop "DLL07BE:01 06CB:7A13 Touchpad" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "DLL07BE:01 06CB:7A13 Touchpad" "libinput Click Method Enabled" 0 1
+xinput set-prop "DLL07BE:01 06CB:7A13 Touchpad" "libinput Disable While Typing Enabled" 0
+
+
+# ------- Keyboard fixes ------
+
+
+# Remap Caps-lock key to Escape, for using VIM
+setxkbmap -option caps:swapescape
+
+# keyboard layout
+
+setxkbvariant --variant workman 
+# idk
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+
